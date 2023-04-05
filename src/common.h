@@ -6,5 +6,8 @@
     #include <SDL2/SDL.h>
 #endif
 
+#include <cstdint>
 #include <cstdlib>
 #include <ctime>
+#include <vector>
+#include <iostream>

@@ -19,7 +19,7 @@ int main(int argc, char** argv)
         return 1;
     }
 
-	game.RandomGame();
+    game.RandomGame();
 
     bool quit = false;
     while (!quit) {

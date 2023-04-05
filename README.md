@@ -2,6 +2,12 @@
 
 Conway's Game of Life made with C++ and SDL2
 
+## Roadmap
+
+- Load grid from file
+- Dump state to file
+- Text for displaying info
+
 ## Build
 
 To build this project you need premake5 and SDL2 installed.

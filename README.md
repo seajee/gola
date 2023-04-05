@@ -42,8 +42,8 @@ to be copied to the final compiled binary directory like in this example
 │
 ├───bin
 │   └───Debug
-│           game.exe
-│           game.pdb
+│           gola.exe
+│           gola.pdb
 |           [SDL2.dll]
 |       ...
 |

@@ -9,6 +9,13 @@ enum CellState : char8_t
     DEAD
 };
 
+enum GameState
+{
+    RUN = 0,
+    PAUSE,
+    STOP
+};
+
 class Game
 {
 public:
@@ -20,6 +27,8 @@ public:
 
     CellState GetCellState(int32_t x, int32_t y);
     void RandomGame();
+    GameState GetState();
+    void SetState(GameState state);
     void Update();
 
 private:
@@ -27,6 +36,8 @@ private:
     void SetCell(Matrix2D<CellState>* grid, int32_t x, int32_t y, CellState value);
 
 private:
+    GameState m_State;
+
     Matrix2D<CellState> m_FrontGrid;
     Matrix2D<CellState> m_BackGrid;
 

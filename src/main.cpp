@@ -1,18 +1,22 @@
 #include "common.h"
 #include "game.h"
 #include "renderer.h"
+#include "event.h"
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGTH 800
 #define WINDOW_TITLE "gola"
 
-#define GRID_WIDTH 200
-#define GRID_HEIGTH 200
+#define GRID_WIDTH 100
+#define GRID_HEIGTH 100
+
+#define GAME_DELAY 32
 
 int main(int argc, char** argv)
 {
     Game game(GRID_WIDTH, GRID_HEIGTH);
     Renderer renderer(&game, WINDOW_WIDTH, WINDOW_HEIGTH, WINDOW_TITLE);
+    EventManager event_manager(&game);
 
     if (renderer.Init() != 0) {
         std::cerr << "Failed to initialize a Renderer" << std::endl;
@@ -21,19 +25,12 @@ int main(int argc, char** argv)
 
     game.RandomGame();
 
-    bool quit = false;
-    while (!quit) {
+    while (game.GetState() != GameState::STOP) {
         renderer.Render();
         game.Update();
+        event_manager.HandleEvents();
 
-        SDL_Event event;
-        while (SDL_PollEvent(&event) != 0) {
-            if (event.type == SDL_QUIT) {
-                quit = true;
-            }
-        }
-
-        SDL_Delay(16);
+        SDL_Delay(GAME_DELAY);
     }
 
     return 0;

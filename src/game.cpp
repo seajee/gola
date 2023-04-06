@@ -8,6 +8,7 @@ Game::Game(int32_t grid_width, int32_t grid_heigth) :
 {
     m_CurrentGrid = &m_FrontGrid;
     m_OtherGrid = &m_BackGrid;
+    m_State = GameState::RUN;
 }
 
 CellState Game::GetCellState(int32_t x, int32_t y)
@@ -39,20 +40,34 @@ void Game::RandomGame()
     }
 }
 
+GameState Game::GetState()
+{
+    return m_State;
+}
+
+void Game::SetState(GameState state)
+{
+    m_State = state;
+}
+
 void Game::Update()
 {
+    if (m_State != GameState::RUN) {
+        return;
+    }
+
     for (int32_t y = 0; y < GridHeigth; ++y) {
         for (int32_t x = 0; x < GridWidth; ++x) {
-            int32_t neighbors = CountAliveNeighbors(x, y);
-            CellState cell_state = GetCellState(x, y);
+            int32_t nb = CountAliveNeighbors(x, y);
+            CellState cs = GetCellState(x, y);
 
-            if (cell_state == CellState::ALIVE && (neighbors < 2 || neighbors > 3)) {
+            if (cs == CellState::ALIVE && (nb < 2 || nb > 3)) {
                 SetCell(m_OtherGrid, x, y, CellState::DEAD);
             }
-            else if (cell_state == CellState::ALIVE && (neighbors == 3 || neighbors == 2)) {
+            else if (cs == CellState::ALIVE && (nb == 3 || nb == 2)) {
                 SetCell(m_OtherGrid, x, y, CellState::ALIVE);
             }
-            else if (cell_state == CellState::DEAD && neighbors == 3) {
+            else if (cs == CellState::DEAD && nb == 3) {
                 SetCell(m_OtherGrid, x, y, CellState::ALIVE);
             }
             else {

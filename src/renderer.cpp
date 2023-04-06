@@ -3,19 +3,19 @@
 Renderer::Renderer(
     Game* game,
     int32_t window_width,
-    int32_t window_heigth,
+    int32_t window_height,
     const char* window_title)
     :
     m_Game(game),
     m_WindowWidth(window_width),
-    m_WindowHeigth(window_heigth),
+    m_WindowHeight(window_height),
     m_WindowTitle(window_title)
 {
     m_Window = 0;
     m_Renderer = 0;
 
     m_CellWidth = m_WindowWidth / m_Game->GridWidth;
-    m_CellHeigth = m_WindowHeigth / m_Game->GridHeigth;
+    m_CellHeight = m_WindowHeight / m_Game->GridHeight;
 }
 
 Renderer::~Renderer()
@@ -36,7 +36,7 @@ int32_t Renderer::Init()
         m_WindowTitle,
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
-        m_WindowWidth, m_WindowHeigth,
+        m_WindowWidth, m_WindowHeight,
         0
     );
 
@@ -64,7 +64,7 @@ void Renderer::Render()
         return;
     }
 
-    for (int32_t y = 0; y < m_Game->GridHeigth; ++y) {
+    for (int32_t y = 0; y < m_Game->GridHeight; ++y) {
         for (int32_t x = 0; x < m_Game->GridWidth; ++x) {
             // TODO: Render a Cell only if it changed state
             if (m_Game->GetCellState(y, x) == CellState::ALIVE) {
@@ -74,7 +74,7 @@ void Renderer::Render()
                 SetColor(0, 0, 0, 255);
             }
 
-            DrawRect(x * m_CellWidth, y * m_CellHeigth, m_CellWidth, m_CellHeigth);
+            DrawRect(x * m_CellWidth, y * m_CellHeight, m_CellWidth, m_CellHeight);
         }
     }
 
@@ -87,11 +87,11 @@ void Renderer::SetColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
     SDL_SetRenderDrawColor(m_Renderer, r, g, b, a);
 }
 
-void Renderer::DrawRect(int32_t x, int32_t y, int32_t width, int32_t heigth)
+void Renderer::DrawRect(int32_t x, int32_t y, int32_t width, int32_t height)
 {
     SDL_Rect rect = {
         x, y,
-        width, heigth
+        width, height
     };
 
     SDL_RenderFillRect(m_Renderer, &rect);

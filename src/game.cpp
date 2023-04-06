@@ -1,10 +1,10 @@
 #include "game.h"
 #include "common.h"
 
-Game::Game(int32_t grid_width, int32_t grid_heigth) :
-    GridWidth(grid_width), GridHeigth(grid_heigth),
-    m_FrontGrid(grid_width, grid_heigth),
-    m_BackGrid(grid_width, grid_heigth)
+Game::Game(int32_t grid_width, int32_t grid_height) :
+    GridWidth(grid_width), GridHeight(grid_height),
+    m_FrontGrid(grid_width, grid_height),
+    m_BackGrid(grid_width, grid_height)
 {
     m_CurrentGrid = &m_FrontGrid;
     m_OtherGrid = &m_BackGrid;
@@ -18,10 +18,10 @@ CellState Game::GetCellState(int32_t x, int32_t y)
     else if (x < 0)
         x = GridWidth + x;
 
-    if (y > GridHeigth - 1)
-        y -= GridHeigth;
+    if (y > GridHeight - 1)
+        y -= GridHeight;
     else if (y < 0)
-        y = GridHeigth + y;
+        y = GridHeight + y;
 
     return (*m_CurrentGrid)[y][x];
 }
@@ -31,7 +31,7 @@ void Game::RandomGame()
     std::srand((uint32_t)std::time(NULL));
 
     // TODO: create a funtion to copy a Matrix2D
-    for (int32_t y = 0; y < GridHeigth; ++y) {
+    for (int32_t y = 0; y < GridHeight; ++y) {
         for (int32_t x = 0; x < GridWidth; ++x) {
             CellState result = (std::rand() % 2) ? CellState::ALIVE : CellState::DEAD;
             SetCell(m_CurrentGrid, y, x, result);
@@ -56,7 +56,7 @@ void Game::Update()
         return;
     }
 
-    for (int32_t y = 0; y < GridHeigth; ++y) {
+    for (int32_t y = 0; y < GridHeight; ++y) {
         for (int32_t x = 0; x < GridWidth; ++x) {
             int32_t nb = CountAliveNeighbors(x, y);
             CellState cs = GetCellState(x, y);

@@ -20,10 +20,10 @@ class Game
 {
 public:
     const int32_t GridWidth;
-    const int32_t GridHeigth;
+    const int32_t GridHeight;
 
 public:
-    Game(int32_t grid_width, int32_t grid_heigth);
+    Game(int32_t grid_width, int32_t grid_height);
 
     CellState GetCellState(int32_t x, int32_t y);
     void RandomGame();

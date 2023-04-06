@@ -20,7 +20,7 @@ public:
 
     CellState GetCellState(int32_t x, int32_t y);
     void RandomGame();
-    void Next();
+    void Update();
 
 private:
     int32_t CountAliveNeighbors(int32_t x, int32_t y);

@@ -39,7 +39,7 @@ void Game::RandomGame()
     }
 }
 
-void Game::Next()
+void Game::Update()
 {
     for (int32_t y = 0; y < GridHeigth; ++y) {
         for (int32_t x = 0; x < GridWidth; ++x) {

@@ -24,7 +24,7 @@ int main(int argc, char** argv)
     bool quit = false;
     while (!quit) {
         renderer.Render();
-        game.Next();
+        game.Update();
 
         SDL_Event event;
         while (SDL_PollEvent(&event) != 0) {

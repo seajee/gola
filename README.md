@@ -33,7 +33,7 @@ After compilation, the binary will be located in the bin directory based
 on the build configuration
 
 ```bash
-./bin/Debug/game
+./bin/Debug/gola
 ```
 
 For running on Windows the SDL2.dll (Win32) dynamic library needs

@@ -5,11 +5,11 @@ class Matrix2D
 {
 private:
     std::vector<T> m_Data;
-    int m_Heigth;
-    int m_Width;
+    int32_t m_Heigth;
+    int32_t m_Width;
 
 public:
-    Matrix2D(int height, int width) :
+    Matrix2D(int32_t height, int32_t width) :
         m_Data(height * width), m_Heigth(height), m_Width(width) 
     {
     }

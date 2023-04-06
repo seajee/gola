@@ -3,10 +3,10 @@
 #include "common.h"
 #include "matrix.h"
 
-enum CellState : bool
+enum CellState : char8_t
 {
-    ALIVE = true,
-    DEAD = false
+    ALIVE = 0,
+    DEAD
 };
 
 class Game

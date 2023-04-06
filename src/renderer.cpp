@@ -60,6 +60,10 @@ int32_t Renderer::Init()
 
 void Renderer::Render()
 {
+    if (m_Game->GetState() != GameState::RUN) {
+        return;
+    }
+
     for (int32_t y = 0; y < m_Game->GridHeigth; ++y) {
         for (int32_t x = 0; x < m_Game->GridWidth; ++x) {
             // TODO: Render a Cell only if it changed state

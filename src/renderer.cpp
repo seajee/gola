@@ -13,6 +13,9 @@ Renderer::Renderer(
 {
     m_Window = 0;
     m_Renderer = 0;
+
+    m_CellWidth = m_WindowWidth / m_Game->GridWidth;
+    m_CellHeigth = m_WindowHeigth / m_Game->GridHeigth;
 }
 
 Renderer::~Renderer()
@@ -57,11 +60,9 @@ int32_t Renderer::Init()
 
 void Renderer::Render()
 {
-    const int32_t cell_width = m_WindowWidth / m_Game->GridWidth;
-    const int32_t cell_heigth = m_WindowHeigth / m_Game->GridHeigth;
-
     for (int32_t y = 0; y < m_Game->GridHeigth; ++y) {
         for (int32_t x = 0; x < m_Game->GridWidth; ++x) {
+            // TODO: Render a Cell only if it changed state
             if (m_Game->GetCellState(y, x) == CellState::ALIVE) {
                 SetColor(255, 255, 255, 255);
             }
@@ -69,7 +70,7 @@ void Renderer::Render()
                 SetColor(0, 0, 0, 255);
             }
 
-            DrawRect(x * cell_width, y * cell_heigth, cell_width, cell_heigth);
+            DrawRect(x * m_CellWidth, y * m_CellHeigth, m_CellWidth, m_CellHeigth);
         }
     }
 

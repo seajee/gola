@@ -24,9 +24,12 @@ private:
 
 private:
     Game* m_Game;
-    const int32_t m_WindowWidth;
-    const int32_t m_WindowHeigth;
+    int32_t m_WindowWidth;
+    int32_t m_WindowHeigth;
     const char* m_WindowTitle;
+
+    int32_t m_CellWidth;
+    int32_t m_CellHeigth;
 
     SDL_Window* m_Window;
     SDL_Renderer* m_Renderer;

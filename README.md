@@ -1,4 +1,4 @@
-# Game
+# gola
 
 Conway's Game of Life made with C++ and SDL2
 

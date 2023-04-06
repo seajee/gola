@@ -31,4 +31,3 @@ project "gola"
     filter { "configurations:Release" }
         defines { "NDEBUG" }
         optimize "On"
-

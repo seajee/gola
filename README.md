@@ -2,7 +2,7 @@
 
 Conway's Game of Life made with C++ and SDL2
 
-![gola](https://github.com/rixm/gola/blob/main/assets/preview.gif)
+![gola](./assets/preview.gif)
 
 ## Roadmap
 

@@ -6,3 +6,6 @@ obj/
 *.sln
 *.vcxproj
 *.vcxproj.user
+
+gola.make
+Makefile

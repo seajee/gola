@@ -20,7 +20,8 @@ public:
 
 private:
     void SetColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
-    void DrawRect(int32_t x, int32_t y, int32_t width, int32_t height);
+    void DrawRect(int32_t x, int32_t y, int32_t width, int32_t height, uint32_t color);
+    void FillSurface(uint32_t color);
 
 private:
     Game* m_Game;
@@ -32,5 +33,5 @@ private:
     int32_t m_CellHeight;
 
     SDL_Window* m_Window;
-    SDL_Renderer* m_Renderer;
+    SDL_Surface* m_Surface;
 };

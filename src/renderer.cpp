@@ -12,7 +12,6 @@ Renderer::Renderer(
     m_WindowTitle(window_title)
 {
     m_Window = 0;
-    m_Renderer = 0;
 
     m_CellWidth = m_WindowWidth / m_Game->GridWidth;
     m_CellHeight = m_WindowHeight / m_Game->GridHeight;
@@ -20,7 +19,6 @@ Renderer::Renderer(
 
 Renderer::~Renderer()
 {
-    SDL_DestroyRenderer(m_Renderer);
     SDL_DestroyWindow(m_Window);
     SDL_Quit();
 }
@@ -46,14 +44,15 @@ int32_t Renderer::Init()
         return 1;
     }
 
-    m_Renderer = SDL_CreateRenderer(m_Window, -1, SDL_RENDERER_ACCELERATED);
+    m_Surface = SDL_GetWindowSurface(m_Window);
 
-    if (!m_Renderer) {
-        SDL_Log("Failed to create renderer: %s", SDL_GetError());
-        SDL_DestroyWindow(m_Window);
+    if (!m_Surface) {
+        SDL_Log("Failed to get surface: %s", SDL_GetError());
         SDL_Quit();
         return 1;
     }
+
+    FillSurface(SDL_MapRGBA(m_Surface->format, 0, 0, 0, 255));
 
     return 0;
 }
@@ -66,33 +65,37 @@ void Renderer::Render()
 
     for (int32_t y = 0; y < m_Game->GridHeight; ++y) {
         for (int32_t x = 0; x < m_Game->GridWidth; ++x) {
-            // TODO: Render a Cell only if it changed state
-            if (m_Game->GetCellState(y, x) == CellState::ALIVE) {
-                SetColor(255, 255, 255, 255);
-            }
-            else {
-                SetColor(0, 0, 0, 255);
+            if (!m_Game->CellChanged(x, y)) {
+                continue;
             }
 
-            DrawRect(x * m_CellWidth, y * m_CellHeight, m_CellWidth, m_CellHeight);
+            uint32_t color = SDL_MapRGBA(m_Surface->format, 0, 0, 0, 255);
+
+            if (m_Game->GetCell(x, y) == CellState::ALIVE) {
+                color = SDL_MapRGBA(m_Surface->format, 255, 255, 255, 255);
+            }
+
+            DrawRect(x * m_CellWidth, y * m_CellHeight, m_CellWidth, m_CellHeight, color);
         }
     }
 
-    SDL_RenderPresent(m_Renderer);
-    SDL_RenderClear(m_Renderer);
+    SDL_UpdateWindowSurface(m_Window);
 }
 
-void Renderer::SetColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
-{
-    SDL_SetRenderDrawColor(m_Renderer, r, g, b, a);
-}
 
-void Renderer::DrawRect(int32_t x, int32_t y, int32_t width, int32_t height)
+void Renderer::DrawRect(int32_t x, int32_t y, int32_t width, int32_t height, uint32_t color)
 {
     SDL_Rect rect = {
         x, y,
         width, height
     };
 
-    SDL_RenderFillRect(m_Renderer, &rect);
+    SDL_FillRect(m_Surface, &rect, color);
+}
+
+void Renderer::FillSurface(uint32_t color)
+{
+    SDL_LockSurface(m_Surface);
+    SDL_memset(m_Surface->pixels, color, m_Surface->h * m_Surface->pitch);
+    SDL_UnlockSurface(m_Surface);
 }

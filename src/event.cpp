@@ -32,6 +32,8 @@ void EventManager::HandleEvents()
             case SDL_SCANCODE_Q:
                 m_Game->SetState(GameState::STOP);
                 break;
+            default:
+                break;
             }
             break;
         /*

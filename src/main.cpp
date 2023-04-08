@@ -3,39 +3,38 @@
 #include "renderer.h"
 #include "event.h"
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGTH 800
+#define WINDOW_WIDTH 1000
+#define WINDOW_HEIGTH 1000
 #define WINDOW_TITLE "gola"
 
-#define GRID_WIDTH 100
-#define GRID_HEIGTH 100
+#define GRID_WIDTH 500
+#define GRID_HEIGTH 500
 
-#define GAME_DELAY 32
+#define GAME_DELAY 16
+#define GAME_SEED 69
 
 int main(int argc, char** argv)
 {
-    Game* game = new Game(GRID_WIDTH, GRID_HEIGTH);
-    Renderer* renderer = new Renderer(game, WINDOW_WIDTH, WINDOW_HEIGTH, WINDOW_TITLE);
-    EventManager* event_manager = new EventManager(game);
+    std::srand(GAME_SEED);
 
-    if (renderer->Init() != 0) {
+    Game game = Game(GRID_WIDTH, GRID_HEIGTH);
+    Renderer renderer = Renderer(&game, WINDOW_WIDTH, WINDOW_HEIGTH, WINDOW_TITLE);
+    EventManager event_manager = EventManager(&game);
+
+    if (renderer.Init() != 0) {
         std::cerr << "Failed to initialize a Renderer" << std::endl;
         return 1;
     }
 
-    game->RandomGame();
+    game.RandomGame();
 
-    while (game->GetState() != GameState::STOP) {
-        renderer->Render();
-        game->Update();
-        event_manager->HandleEvents();
+    while (game.GetState() != GameState::STOP) {
+        renderer.Render();
+        game.Update();
+        event_manager.HandleEvents();
 
         SDL_Delay(GAME_DELAY);
     }
-
-    delete game;
-    delete renderer;
-    delete event_manager;
 
     return 0;
 }

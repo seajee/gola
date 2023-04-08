@@ -6,8 +6,7 @@ Conway's Game of Life made with C++ and SDL2
 
 ## Roadmap
 
-- Load grid from file
-- Dump state to file
+- Filesystem integration
 - Configuration Editor
 - imGui implementation
 - Multi Threading

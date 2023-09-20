@@ -1,6 +1,6 @@
 #pragma once
 
-enum CellState : char8_t
+enum class CellState : char8_t
 {
     ALIVE = 0,
     DEAD

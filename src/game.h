@@ -6,7 +6,7 @@
 
 typedef Matrix2D<CellState> CellGrid;
 
-enum GameState
+enum class GameState
 {
     RUN = 0,
     PAUSE,
